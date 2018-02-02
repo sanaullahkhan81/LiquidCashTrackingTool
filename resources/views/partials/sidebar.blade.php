@@ -92,14 +92,7 @@
                                         </span>
                                     </a>
                                 </li>
-                                 <li class="{{ $request->segment(1) == 'addCurClosing' ? 'active active-sub' : '' }}">
-                                    <a href="{{ route('curBalance.create') }}">
-                                        <i class="fa fa-list-ul"></i>
-                                        <span class="title">
-                                            Add Currencies Closing
-                                        </span>
-                                    </a>
-                                </li>
+                               
                                 
                                 </ul>
                     </li>

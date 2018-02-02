@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateIncomesRequest;
 use App\Currencies;
 use App\Cur_balance;
 use App\Amount;
+use DB;
 
 class IncomesController extends Controller
 {
@@ -20,7 +21,14 @@ class IncomesController extends Controller
      */
     public function index()
     {
-        $incomes = Income::all();
+        
+       $incomes = DB::select('SELECT incomes.*,currencies.cur_name,incomes_categories.name FROM `incomes` 
+               left join currencies on incomes.cur_id = currencies.id 
+               inner join incomes_categories on incomes.income_category_id = incomes_categories.id');
+                
+      
+   
+        //$incomes = Income::all();
       
 
         return view('incomes.index', compact('incomes'));
@@ -135,9 +143,32 @@ class IncomesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+            
     {
+       
+        $seprating =explode('-',$id);
+       
+        $id = $seprating[0];
+        $amount = $seprating[1];
+        $cur_id = $seprating[2];
+        $cur_amount = $seprating[3];
+       
         $income = Income::findOrFail($id);
         $income->delete();
+        
+        $bal = Amount::find(21);
+        $amount = $bal->amount - $amount;
+        Amount::find(21)->update(['amount' =>$amount ]);
+        //checking if this is currency transcation ,
+        // if yes currency will be delted
+        if($cur_id ==0){
+            echo 'Deleting currencies Amount';
+        }else{
+           $currencies = Currencies::find($cur_id);
+            $curenciesAmount = $currencies->amount - $cur_amount;
+            Currencies::find($cur_id)->update(['amount' =>$curenciesAmount ]);
+        }
+        
 
         return redirect()->route('incomes.index');
     }

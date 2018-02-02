@@ -20,6 +20,7 @@
                         <th>Expense Category</th>
                         <th>Entry date</th>
                         <th>Amount</th>
+                        <th>Currency Amount</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -29,17 +30,31 @@
                         @foreach ($expenses as $expense)
                             <tr data-entry-id="{{ $expense->id }}">
                                 <td></td>
-                                <td>{{ $expense->expenses_category->name or '' }}</td>
+                                <td>{{ $expense->name or '' }}</td>
                                 <td>{{ $expense->entry_date }}</td>
                                 <td>{{ $expense->amount }}</td>
                                 <td>
+                                    @if($expense->cur_id == 0)
+                                    {{0.00}}
+                                    @else
+                                    {{ $expense->cur_name .' : '. $expense->cur_amount }}
+                                    @endif
+                                </td>
+                                <td>
                                     <a href="{{ route('expenses.show',[$expense->id]) }}" class="btn btn-xs btn-primary">View</a>
-                                    <a href="{{ route('expenses.edit',[$expense->id]) }}" class="btn btn-xs btn-info">Edit</a>
+<!--                                    <a href="{{ route('expenses.edit',[$expense->id]) }}" class="btn btn-xs btn-info">Edit</a>-->
+                                  
                                     {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("Are you sure?")."');",
-                                        'route' => ['expenses.destroy', $expense->id])) !!}
+                                        'route' => ['expenses.destroy', 
+                                        $expense->id = 
+                                        $expense->id.'-'.
+                                        $expense->amount.'-'.
+                                        $expense->cur_id.'-'.
+                                        $expense->cur_amount
+                                        ])) !!}
                                     {!! Form::submit('Delete', array('class' => 'btn btn-xs btn-danger')) !!}
                                     {!! Form::close() !!}
                                 </td>

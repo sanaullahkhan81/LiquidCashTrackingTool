@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateExpensesRequest;
 use App\Currencies;
 use App\Cur_balance;
 use App\Amount;
+use DB;
 
 class ExpensesController extends Controller
 {
@@ -20,8 +21,10 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::all();
-        
+        //$expenses = Expense::all();
+        $expenses = DB::select('SELECT expenses.*,currencies.cur_name,expenses_categories.name FROM `expenses` 
+               left join currencies on expenses.cur_id = currencies.id 
+               inner join expenses_categories on expenses.expenses_category_id = expenses_categories.id');
 
         return view('expenses.index', compact('expenses'));
     }
@@ -141,8 +144,31 @@ class ExpensesController extends Controller
      */
     public function destroy($id)
     {
+       
+        $seprating =explode('-',$id);
+       
+        $id = $seprating[0];
+        $amount = $seprating[1];
+        $cur_id = $seprating[2];
+        $cur_amount = $seprating[3];
+        
         $expense = Expense::findOrFail($id);
         $expense->delete();
+        
+        $bal = Amount::find(21);
+        $amount = $bal->amount + $amount;
+        Amount::find(21)->update(['amount' =>$amount ]);
+        
+        //checking if this is currency transcation ,
+        // if yes currency will be delted
+        if($cur_id ==0){
+            echo 'Adding Curreny Amount';
+        }else{
+           $currencies = Currencies::find($cur_id);
+            $curenciesAmount = $currencies->amount + $cur_amount;
+            Currencies::find($cur_id)->update(['amount' =>$curenciesAmount ]);
+        }
+        
 
         return redirect()->route('expenses.index');
     }
