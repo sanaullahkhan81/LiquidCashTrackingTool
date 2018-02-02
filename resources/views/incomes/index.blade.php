@@ -21,6 +21,7 @@
                         <th>Entry date</th>
                         <th>Amount</th>
                         <th>Currency Amount</th>
+                        <th>Description</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -40,6 +41,7 @@
                                     {{ $income->cur_name .' : '. $income->cur_amount }}
                                     @endif
                                 </td>
+                                <td>{{$income->description}}</td>
                                 <td>
                                     <a href="{{ route('incomes.show',[$income->id]) }}" class="btn btn-xs btn-primary">View</a>
 <!--                                    <a href="{{ route('incomes.edit',[$income->id]) }}" class="btn btn-xs btn-info">Edit</a>-->
