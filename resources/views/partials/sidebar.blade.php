@@ -24,20 +24,43 @@
                     <span class="title">Money In</span>
                 </a>
             </li>
-            <li class="{{ $request->segment(1) == 'monthly_reports' ? 'active' : '' }}">
-                <a href="{{ route('monthly_reports.index') }}">
-                    <i class="fa fa-line-chart"></i>
-                    <span class="title">Monthly Report</span>
-                </a>
-            </li>
             
-              <li class="{{ $request->segment(1) == 'custom_reports' ? 'active' : '' }}">
-                  <a href="{{ route('custom_reports.index') }}">
-                    <i class="fa fa-pie-chart"></i>
-                    <span class="title">Custom Report</span>
-                </a>
-            </li>
-           
+            
+            
+            
+             <li>
+                        <a href="#">
+                            <i class="fa fa-gears"></i>
+                            <span class="title">Reports</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                                  <li class="{{ $request->segment(1) == 'custom_reports' ? 'active' : '' }}">
+                                        <a href="{{ route('custom_reports.index') }}">
+                                          <i class="fa fa-pie-chart"></i>
+                                          <span class="title">Cash Report</span>
+                                      </a>
+                                  </li>
+                                  
+                                      <li class="{{ $request->segment(1) == 'dailyReports' ? 'active' : '' }}">
+                                        <a href="{{ url('dailyReports') }} ">
+                                            <i class="fa fa-line-chart"></i>
+                                            <span class="title">Daily Report</span>
+                                        </a>
+                                    </li>
+                                    
+                                <li class="{{ $request->segment(1) == 'monthly_reports' ? 'active' : '' }}">
+                                    <a href="{{ route('monthly_reports.index') }}">
+                                        <i class="fa fa-line-chart"></i>
+                                        <span class="title">Monthly Report</span>
+                                    </a>
+                                </li>
+                                 
+                               
+                                
+                                </ul>
+                    </li>
+            
             <li>
                         <a href="#">
                             <i class="fa fa-gears"></i>
@@ -80,6 +103,9 @@
                                 
                                 </ul>
                     </li>
+                                    <li>
+           
+           
                                     <li>
                         <a href="#">
                             <i class="fa fa-users"></i>

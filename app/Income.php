@@ -79,4 +79,20 @@ class Income extends Model
         return $incomeAmount;
         
     }
+    
+    static function getBycategory($date){
+        
+//       $income= Income::where('entry_date',$date)
+//                ->join('incomes_categories','incomes.income_category_id','=', 'incomes_categories.id')
+//                ->groupBy('incomes.income_category_id')               
+//                ->selectRaw('sum(incomes.amount) as sum,incomes_categories.name as name')
+//                
+//                ->orderBy('sum', 'desc')
+//               ->pluck('sum','name');
+        
+         
+      
+            
+        
+    }
 }

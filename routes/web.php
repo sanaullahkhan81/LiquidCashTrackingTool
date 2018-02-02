@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('updatingAmount','AmountController@updatingAmount');
     Route::post('updatingCurrencies','CurrenciesController@updatingCurrencies');
+    Route::get('dailyReports','MonthlyReportsController@dailyReports');
 });
 
 

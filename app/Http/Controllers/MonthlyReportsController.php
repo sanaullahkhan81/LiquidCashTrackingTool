@@ -64,4 +64,8 @@ class MonthlyReportsController extends Controller
             'profit'
         ));
     }
+    
+    public function dailyReports(){
+        return view('monthly_reports.daily');
+    }
 }
